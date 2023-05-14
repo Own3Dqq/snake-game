@@ -12,7 +12,6 @@ export default class extends Manipulator {
 		this.#build();
 	}
 
-	/* Прорисовка сетки для игры */
 	#build() {
 		this.gridContainer.style.width = this.gridContainer.style.height = this.boxSize * this.gridCount + 'px';
 

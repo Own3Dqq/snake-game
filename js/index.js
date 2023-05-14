@@ -12,7 +12,9 @@ class Snake extends Grid {
 	#process = null;
 	#score = 0;
 	#speed = 0;
-	#food = '../img/apple.png';
+	#randomCellIndex = null;
+	#foodCell = null;
+	#foodSrcImage = '/img/apple.png';
 	#controls = this.find('#snake-controls-form');
 	#startBtn = this.find('#snake-start-game');
 	#endBtn = this.find('#snake-end-game');
@@ -26,6 +28,7 @@ class Snake extends Grid {
 			gridCellCssClass: Snake.snakeCellCssClass,
 			gridContainerSelector: Snake.gridContainerCssSelector,
 		});
+
 		this.direction = DR.LEFT;
 
 		this.#init();
@@ -40,7 +43,8 @@ class Snake extends Grid {
 
 	#start() {
 		this.#snake = this.#buildSnake(Math.floor(this.gridCount / 2), Math.floor(this.gridCount / 2));
-		this.#generateFood(Snake.gridContainerCssSelector);
+		console.log(this.#snake);
+		this.#generateFood();
 		this.#speed = +this.#controls.speed.value;
 		this.#messageContainer.innerHTML = 'Welcome to Snake !';
 		this.#startBtn.style.display = 'none';
@@ -93,12 +97,9 @@ class Snake extends Grid {
 		}, this.#speed);
 	}
 
-	#checkHasFoodEaten() {}
-
 	#update() {
-		// if (this.checkHasFoodEaten()) {
-		// 	this.#generateFood();
-		// }
+		this.#checkHasFoodEaten();
+
 		// checkHasFoodEaten();
 		// if a snake has eaten apple then add +1 to score and push one more object ( {cell, row} )
 		// after it ate apple you should generate new coords for the apple to append it in a cell again
@@ -110,12 +111,30 @@ class Snake extends Grid {
 
 		for (const [index, snakeData] of this.#snake.entries()) {
 			let cellElement = this.#findByCoords(snakeData);
+			console.log(cellElement);
 			if (index === 0) {
 				cellElement.classList.add(Snake.snakeHeadCssClass, Snake.snakeCssClass);
 			} else {
 				cellElement.classList.add(Snake.snakeBodyCssClass, Snake.snakeCssClass);
 			}
 		}
+	}
+
+	#generateFood() {
+		const food = new Image(this.boxSize, this.boxSizes);
+		food.src = this.#foodSrcImage;
+		this.#randomCellIndex = Math.floor(Math.random() * this.gridContainer.children.length);
+
+		!this.gridContainer.children[this.#randomCellIndex].classList.contains(this.snakeHeadCssClass) &&
+		!this.gridContainer.children[this.#randomCellIndex].classList.contains(this.snakeHeadCssClass)
+			? this.gridContainer.children[this.#randomCellIndex].append(food)
+			: null;
+	}
+
+	#checkHasFoodEaten() {
+		// checkHasFoodEaten() - после каждого setInterval будем вызывать, функцию для проверки,
+		// попала ли голова змейки на клетку где находится еда, если попала добавляем 1 элемент в массив змейки, добавляем score 1 очко.
+		// после чего вызываем функцию генерации новой еди на поле.
 	}
 
 	#clear() {
@@ -133,26 +152,6 @@ class Snake extends Grid {
 		else if (key === 'ArrowUp' && this.direction != DR.DOWN) this.direction = DR.UP;
 		else if (key === 'ArrowRight' && this.direction != DR.LEFT) this.direction = DR.RIGHT;
 		else if (key === 'ArrowDown' && this.direction != DR.UP) this.direction = DR.DOWN;
-	}
-
-	#generateFood() {
-		const container = document.querySelector(Snake.gridContainerCssSelector);
-		const food = new Image(this.boxSize, this.boxSize);
-		food.src = './img/apple.png';
-
-		function randomCell() {
-			const randCell = Math.floor(Math.random() * container.children.length);
-			if (
-				container.children[randCell].classList.contains('snake-head') ||
-				container.children[randCell].classList.contains('snake-head')
-			) {
-				randomCell();
-			} else {
-				container.children[randCell].append(food);
-			}
-		}
-
-		randomCell();
 	}
 
 	#resetData() {
@@ -190,5 +189,3 @@ new Snake({
 	boxSize: 44,
 	gridCount: 12,
 });
-
-console.log();
