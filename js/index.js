@@ -9,6 +9,7 @@ class Snake extends Grid {
 	static gridContainerCssSelector = '#snake-container';
 
 	#snake = [];
+	#mode = '';
 	#process = null;
 	#score = 0;
 	#speed = 0;
@@ -137,7 +138,9 @@ class Snake extends Grid {
 
 	#checkHasFoodEaten() {
 		if (this.#snake[0].row === this.#food.row && this.#snake[0].cell === this.#food.cell) {
-			this.#score = this.#score + 1;
+			this.#score = ++this.#score;
+			this.#snake.push(this.#food);
+
 			const snakeContainer = document.querySelector(Snake.gridContainerCssSelector);
 			for (let i = 0; i < snakeContainer.children.length; i++) {
 				const element = snakeContainer.children[i];
