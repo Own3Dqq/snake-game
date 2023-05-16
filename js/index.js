@@ -12,8 +12,7 @@ class Snake extends Grid {
 	#process = null;
 	#score = 0;
 	#speed = 0;
-	#randomCellIndex = null;
-	#foodCell = null;
+	#food = null;
 	#foodSrcImage = '/img/apple.png';
 	#controls = this.find('#snake-controls-form');
 	#startBtn = this.find('#snake-start-game');
@@ -43,14 +42,16 @@ class Snake extends Grid {
 
 	#start() {
 		this.#snake = this.#buildSnake(Math.floor(this.gridCount / 2), Math.floor(this.gridCount / 2));
-		console.log(this.#snake);
 		this.#generateFood();
 		this.#speed = +this.#controls.speed.value;
-		this.#messageContainer.innerHTML = 'Welcome to Snake !';
+		this.#messageContainer.innerHTML = 'Welcome to Snake!';
+		const scoreValue = this.#scoreContainer.lastChild;
+
 		this.#startBtn.style.display = 'none';
 		this.#endBtn.style.display = 'block';
 
 		this.#process = setInterval(() => {
+			scoreValue.innerHTML = this.#score;
 			let { cell, row } = this.#snake[0];
 			// let { cell, row } = #noWallMode();
 
@@ -58,7 +59,7 @@ class Snake extends Grid {
 				case DR.LEFT:
 					{
 						this.#snake.unshift({
-							cell: cell - 1,
+							cell: cell !== 0 ? cell - 1 : cell + this.gridCount - 1,
 							row,
 						});
 					}
@@ -67,7 +68,7 @@ class Snake extends Grid {
 				case DR.RIGHT:
 					{
 						this.#snake.unshift({
-							cell: cell + 1,
+							cell: cell !== this.gridCount - 1 ? cell + 1 : cell - this.gridCount + 1,
 							row,
 						});
 					}
@@ -77,7 +78,7 @@ class Snake extends Grid {
 					{
 						this.#snake.unshift({
 							cell,
-							row: row - 1,
+							row: row !== 0 ? row - 1 : row + this.gridCount - 1,
 						});
 					}
 					break;
@@ -86,7 +87,8 @@ class Snake extends Grid {
 					{
 						this.#snake.unshift({
 							cell,
-							row: row + 1,
+							row: row !== this.gridCount - 1 ? row + 1 : row - this.gridCount + 1,
+							// row: row !== this.gridCount - 1 ? row + 1 : row - this.gridCount - 1,
 						});
 					}
 					break;
@@ -99,11 +101,7 @@ class Snake extends Grid {
 
 	#update() {
 		this.#checkHasFoodEaten();
-
-		// checkHasFoodEaten();
-		// if a snake has eaten apple then add +1 to score and push one more object ( {cell, row} )
-		// after it ate apple you should generate new coords for the apple to append it in a cell again
-
+		this.#checkOnTailCrash();
 		// checkOnTailCrash - if a head bump into the tail. if so need to final game
 		// this.#message.innerHTML = 'Game Over', reset score and so on
 
@@ -111,7 +109,6 @@ class Snake extends Grid {
 
 		for (const [index, snakeData] of this.#snake.entries()) {
 			let cellElement = this.#findByCoords(snakeData);
-			console.log(cellElement);
 			if (index === 0) {
 				cellElement.classList.add(Snake.snakeHeadCssClass, Snake.snakeCssClass);
 			} else {
@@ -121,25 +118,46 @@ class Snake extends Grid {
 	}
 
 	#generateFood() {
-		const food = new Image(this.boxSize, this.boxSizes);
-		food.src = this.#foodSrcImage;
-		this.#randomCellIndex = Math.floor(Math.random() * this.gridContainer.children.length);
+		do {
+			this.#food = {
+				cell: Math.floor(Math.random() * this.gridCount),
+				row: Math.floor(Math.random() * this.gridCount),
+			};
+		} while (
+			this.#snake.find((element) => {
+				element.cell === this.#food.cell && element.row === this.#food.row;
+			})
+		);
 
-		!this.gridContainer.children[this.#randomCellIndex].classList.contains(this.snakeHeadCssClass) &&
-		!this.gridContainer.children[this.#randomCellIndex].classList.contains(this.snakeHeadCssClass)
-			? this.gridContainer.children[this.#randomCellIndex].append(food)
-			: null;
+		let cellFood = this.#findByCoords(this.#food);
+		const image = new Image();
+		image.src = this.#foodSrcImage;
+		cellFood.append(image);
 	}
 
 	#checkHasFoodEaten() {
+		if (this.#snake[0].row === this.#food.row && this.#snake[0].cell === this.#food.cell) {
+			this.#score = this.#score + 1;
+			const snakeContainer = document.querySelector(Snake.gridContainerCssSelector);
+			for (let i = 0; i < snakeContainer.children.length; i++) {
+				const element = snakeContainer.children[i];
+				element.innerHTML = '';
+			}
+
+			this.#generateFood();
+		}
+
+		// console.log(this.#food[0].row);
+
 		// checkHasFoodEaten() - после каждого setInterval будем вызывать, функцию для проверки,
 		// попала ли голова змейки на клетку где находится еда, если попала добавляем 1 элемент в массив змейки, добавляем score 1 очко.
 		// после чего вызываем функцию генерации новой еди на поле.
 	}
 
+	#checkOnTailCrash() {}
+
 	#clear() {
 		let cells = this.find(`.${Snake.snakeCssClass}`, this.gridContainer);
-
 		cells.forEach((cell) => {
 			cell.className = Snake.snakeCellCssClass;
 		});
