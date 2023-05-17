@@ -8,6 +8,7 @@ class Snake extends Grid {
 	static snakeBodyCssClass = 'snake-body';
 	static gridContainerCssSelector = '#snake-container';
 
+	/* Static variable */
 	#snake = [];
 	#mode = '';
 	#process = null;
