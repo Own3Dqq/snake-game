@@ -1,6 +1,8 @@
 import Grid from './grid.js';
 import { DIRECTIONS as DR } from './helpers.js';
 
+/* Snake Game */
+
 class Snake extends Grid {
 	static snakeCellCssClass = 'snake-cell';
 	static snakeCssClass = 'snake';
