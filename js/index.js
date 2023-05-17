@@ -103,7 +103,6 @@ class Snake extends Grid {
 	#update() {
 		this.#checkHasFoodEaten();
 		this.#checkOnTailCrash();
-		// checkOnTailCrash - if a head bump into the tail. if so need to final game
 		// this.#message.innerHTML = 'Game Over', reset score and so on
 
 		this.#snake.pop();
