@@ -39,6 +39,7 @@ class Snake extends Grid {
     }
 
     #start() {
+        console.log('start');
         this.#snake = this.#buildSnake(Math.floor(this.gridCount / 2), Math.floor(this.gridCount / 2));
         // #generateFood() // place img in a random cell 
 
