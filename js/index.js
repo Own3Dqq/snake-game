@@ -1,3 +1,4 @@
+
 import Grid from './grid.js';
 import { DIRECTIONS as DR } from './helpers.js';
 
