@@ -28,7 +28,7 @@ export default class extends Manipulator {
 
     return fragment;
   }
-  
+
   #createCell(row, cell) {
     const div = document.createElement('div');
     div.classList.add(this.gridCellCssClass);
