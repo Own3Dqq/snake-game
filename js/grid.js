@@ -16,14 +16,14 @@ export default class extends Manipulator {
         this.gridContainer.style.width = this.gridContainer.style.height = this.boxSize * this.gridCount + 'px';
 
         for (let index = 0; index < this.gridCount; index++) {
-        this.gridContainer.append(this.#createRow(index));
+            this.gridContainer.append(this.#createRow(index));
         }
     }
 
     #createRow(row) {
         let fragment = new DocumentFragment();
         for (let index = 0; index < this.gridCount; index++) {
-        fragment.append(this.#createCell(row, index));
+            fragment.append(this.#createCell(row, index));
         }
 
         return fragment;
