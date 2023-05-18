@@ -1,69 +1,87 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    background: #3d3e3e;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	background: #3d3e3e;
 }
 
 section {
-    display: flex;
+	display: flex;
 }
 
 .snake-cell {
-    display: flex;
-    border: 1px solid #cccccc;
-    border-radius: 3px;
-    transition: 100ms;
+	display: flex;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	transition: 100ms;
 }
 
 .snake-cell img {
-    margin: auto;
+	margin: auto;
 }
 
 .snake-head {
-    background-color: green;
-    border-radius: 6px;
+	background-color: green;
+	border-radius: 6px;
 }
 
 .snake-body {
-    background-color: greenyellow;
+	background-color: greenyellow;
 }
 
 #snake-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: 10px;
+}
+
+#snake-controls-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.form__label {
+	display: flex;
+	flex-direction: column;
+	margin: 20px 0;
+}
+
+.subtitle {
+	font-weight: bold;
+	font-size: 20px;
+	padding: 10px 0;
+
 }
 
 .snake-wrapper {
-    display: flex;
-    margin: auto;
+	display: flex;
+	margin: auto;
 }
 
 .controls {
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .controls button {
-    width: 115px;
+	width: 115px;
 }
 
 .controls .label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
+	font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
 }
 
 .controls select {
-    padding: 5px;
+	padding: 5px;
 }
 
 #snake-message,
 #snake-score {
-    display: block;
-    text-align: center;
-    margin-bottom: 20px;
+	display: block;
+	text-align: center;
+	margin-bottom: 20px;
 }

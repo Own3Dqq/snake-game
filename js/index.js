@@ -54,7 +54,6 @@ class Snake extends Grid {
     this.#process = setInterval(() => {
       scoreValue.innerHTML = this.#score;
       let { cell, row } = this.#snake[0];
-      // let { cell, row } = #noWallMode();
 
       switch (this.direction) {
         case DR.LEFT:
@@ -148,9 +147,7 @@ class Snake extends Grid {
     }
   }
 
-  #checkOnTailCrash() {
-    //this.#message.innerHTML = 'Game Over';
-  }
+  #checkOnTailCrash() {}
 
   #clear() {
     let cells = this.find(`.${Snake.snakeCssClass}`, this.gridContainer);

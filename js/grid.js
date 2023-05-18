@@ -19,7 +19,7 @@ export default class extends Manipulator {
       this.gridContainer.append(this.#createRow(index));
     }
   }
-  /* Создание ряда*/
+
   #createRow(row) {
     let fragment = new DocumentFragment();
     for (let index = 0; index < this.gridCount; index++) {
@@ -28,7 +28,7 @@ export default class extends Manipulator {
 
     return fragment;
   }
-  /* Создание клетки */
+  
   #createCell(row, cell) {
     const div = document.createElement('div');
     div.classList.add(this.gridCellCssClass);
