@@ -13,8 +13,7 @@ export default class extends Manipulator {
     }
 
     #build() {
-        this.gridContainer.style.width = this.gridContainer.style.height =
-            this.boxSize * this.gridCount + 'px';
+        this.gridContainer.style.width = this.gridContainer.style.height = this.boxSize * this.gridCount + 'px';
 
         for (let index = 0; index < this.gridCount; index++) {
             this.gridContainer.append(this.#createRow(index));

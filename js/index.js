@@ -44,10 +44,7 @@ class Snake extends Grid {
     #start() {
         const scoreValue = this.#scoreContainer.lastChild;
 
-        this.#snake = this.#buildSnake(
-            Math.floor(this.gridCount / 2),
-            Math.floor(this.gridCount / 2)
-        );
+        this.#snake = this.#buildSnake(Math.floor(this.gridCount / 2), Math.floor(this.gridCount / 2));
 
         this.#generateFood();
         this.#speed = +this.#controls.speed.value;
@@ -72,8 +69,7 @@ class Snake extends Grid {
                 case DR.RIGHT:
                     {
                         this.#snake.unshift({
-                            cell:
-                                сell !== this.gridCount - 1 ? cell + 1 : cell - this.gridCount + 1,
+                            cell: cell !== this.gridCount - 1 ? cell + 1 : cell - this.gridCount + 1,
                             row,
                         });
                     }
