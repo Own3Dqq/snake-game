@@ -35,9 +35,7 @@ class Snake extends Grid {
     }
 
     #init() {
-        document.addEventListener('keydown', (event) =>
-            this.#updateDirection(event)
-        );
+        document.addEventListener('keydown', (event) => this.#updateDirection(event));
 
         this.#startBtn.addEventListener('click', (event) => this.#start(event));
         this.#endBtn.addEventListener('click', (event) => this.#end(event));
@@ -65,10 +63,7 @@ class Snake extends Grid {
                 case DR.LEFT:
                     {
                         this.#snake.unshift({
-                            cell:
-                                cell !== 0
-                                    ? cell - 1
-                                    : cell + this.gridCount - 1,
+                            cell: cell !== 0 ? cell - 1 : cell + this.gridCount - 1,
                             row,
                         });
                     }
@@ -78,9 +73,7 @@ class Snake extends Grid {
                     {
                         this.#snake.unshift({
                             cell:
-                                cell !== this.gridCount - 1
-                                    ? cell + 1
-                                    : cell - this.gridCount + 1,
+                                сell !== this.gridCount - 1 ? cell + 1 : cell - this.gridCount + 1,
                             row,
                         });
                     }
@@ -99,10 +92,7 @@ class Snake extends Grid {
                     {
                         this.#snake.unshift({
                             cell,
-                            row:
-                                row !== this.gridCount - 1
-                                    ? row + 1
-                                    : row - this.gridCount + 1,
+                            row: row !== this.gridCount - 1 ? row + 1 : row - this.gridCount + 1,
                         });
                     }
                     break;
@@ -122,15 +112,9 @@ class Snake extends Grid {
         for (const [index, snakeData] of this.#snake.entries()) {
             let cellElement = this.#findByCoords(snakeData);
             if (index === 0) {
-                cellElement.classList.add(
-                    Snake.snakeHeadCssClass,
-                    Snake.snakeCssClass
-                );
+                cellElement.classList.add(Snake.snakeHeadCssClass, Snake.snakeCssClass);
             } else {
-                cellElement.classList.add(
-                    Snake.snakeBodyCssClass,
-                    Snake.snakeCssClass
-                );
+                cellElement.classList.add(Snake.snakeBodyCssClass, Snake.snakeCssClass);
             }
         }
     }
@@ -143,8 +127,7 @@ class Snake extends Grid {
             };
         } while (
             this.#snake.find((element) => {
-                element.cell === this.#food.cell &&
-                    element.row === this.#food.row;
+                element.cell === this.#food.cell && element.row === this.#food.row;
             })
         );
 
@@ -155,16 +138,11 @@ class Snake extends Grid {
     }
 
     #checkHasFoodEaten() {
-        if (
-            this.#snake[0].row === this.#food.row &&
-            this.#snake[0].cell === this.#food.cell
-        ) {
+        if (this.#snake[0].row === this.#food.row && this.#snake[0].cell === this.#food.cell) {
             this.#score = ++this.#score;
             this.#snake.push(this.#food);
 
-            const snakeContainer = document.querySelector(
-                Snake.gridContainerCssSelector
-            );
+            const snakeContainer = document.querySelector(Snake.gridContainerCssSelector);
 
             for (let i = 0; i < snakeContainer.children.length; i++) {
                 const element = snakeContainer.children[i];
@@ -187,23 +165,17 @@ class Snake extends Grid {
     #updateDirection(event) {
         let key = event.key;
 
-        if (key === 'ArrowLeft' && this.direction != DR.RIGHT)
-            this.direction = DR.LEFT;
-        else if (key === 'ArrowUp' && this.direction != DR.DOWN)
-            this.direction = DR.UP;
-        else if (key === 'ArrowRight' && this.direction != DR.LEFT)
-            this.direction = DR.RIGHT;
-        else if (key === 'ArrowDown' && this.direction != DR.UP)
-            this.direction = DR.DOWN;
+        if (key === 'ArrowLeft' && this.direction != DR.RIGHT) this.direction = DR.LEFT;
+        else if (key === 'ArrowUp' && this.direction != DR.DOWN) this.direction = DR.UP;
+        else if (key === 'ArrowRight' && this.direction != DR.LEFT) this.direction = DR.RIGHT;
+        else if (key === 'ArrowDown' && this.direction != DR.UP) this.direction = DR.DOWN;
     }
 
     #resetData() {
         this.#score = 0;
         this.#startBtn.style.display = 'block';
         this.#endBtn.style.display = 'none';
-        const snakeContainer = document.querySelector(
-            Snake.gridContainerCssSelector
-        );
+        const snakeContainer = document.querySelector(Snake.gridContainerCssSelector);
         (function () {
             for (let i = 0; i < snakeContainer.children.length; i++) {
                 const element = snakeContainer.children[i];
@@ -220,10 +192,7 @@ class Snake extends Grid {
     }
 
     #findByCoords({ cell, row }) {
-        return this.find(
-            `[data-cell="${cell}"][data-row="${row}"]`,
-            this.gridContainer
-        );
+        return this.find(`[data-cell="${cell}"][data-row="${row}"]`, this.gridContainer);
     }
 
     #buildSnake(startCell, startRow, size = 5) {
