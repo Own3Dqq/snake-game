@@ -32,6 +32,7 @@ class Snake extends Grid {
     }
 
     #init() {
+		console.log('init')
         document.addEventListener('keydown', (event) => this.#updateDirection(event));
 
         this.#startBtn.addEventListener('click', (event) => this.#start(event));
