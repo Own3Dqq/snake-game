@@ -21,7 +21,7 @@ export default class extends Manipulator {
     }
 
     #createRow(row) {
-        let fragment = new DocumentFragment();
+        const fragment = new DocumentFragment();
         for (let index = 0; index < this.gridCount; index++) {
             fragment.append(this.#createCell(row, index));
         }

@@ -2,11 +2,29 @@ body {
     margin: 0;
     padding: 0;
     font-size: 16px;
-    background: #3d3e3e;
+    background: #404258;
+    color: #fff;
 }
 
 section {
     display: flex;
+}
+
+.snake-message {
+    font-size: 30px;
+    display: block;
+    height: 60px;
+    padding: 4px 0;
+    margin: 0;
+    text-align: center;
+}
+
+.snake-score {
+    display: block;
+    text-align: center;
+    font-size: 22px;
+    padding: 10px 0;
+    margin-bottom: 10px;
 }
 
 .snake-cell {
@@ -50,7 +68,6 @@ section {
     font-weight: bold;
     font-size: 20px;
     padding: 10px 0;
-
 }
 
 .snake-wrapper {
@@ -77,11 +94,4 @@ section {
 
 .controls select {
     padding: 5px;
-}
-
-#snake-message,
-#snake-score {
-    display: block;
-    text-align: center;
-    margin-bottom: 20px;
 }
