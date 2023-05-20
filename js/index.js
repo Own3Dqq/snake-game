@@ -1,3 +1,11 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-new */
+/* eslint-disable no-lone-blocks */
+/* eslint-disable default-case */
+/* eslint-disable import/extensions */
+/* eslint-disable lines-between-class-members */
+/* eslint-disable no-plusplus */
 import Grid from './grid.js';
 import { DIRECTIONS as DR } from './helpers.js';
 
@@ -48,54 +56,94 @@ class Snake extends Grid {
         this.#controls.mode.setAttribute('disabled', 'disabled');
 
         this.#snake = this.#buildSnake(Math.floor(this.gridCount / 2), Math.floor(this.gridCount / 2));
-
         this.#generateFood();
+
         this.#speed = +this.#controls.speed.value;
         this.#mode = this.#controls.mode.value;
+
         this.#messageContainer.innerHTML = ' ';
         this.#startBtn.style.display = 'none';
         this.#endBtn.style.display = 'block';
 
         this.#process = setInterval(() => {
             const { cell, row } = this.#snake[0];
-            // let { cell, row } = this.#noWallMode();
 
-            switch (this.direction) {
-                case DR.LEFT:
-                    {
-                        this.#snake.unshift({
-                            cell: cell !== 0 ? cell - 1 : cell + this.gridCount - 1,
-                            row,
-                        });
-                    }
-                    break;
+            if (this.#mode === 'no-wall') {
+                switch (this.direction) {
+                    case DR.LEFT:
+                        {
+                            this.#snake.unshift({
+                                cell: cell !== 0 ? cell - 1 : cell + this.gridCount - 1,
+                                row,
+                            });
+                        }
+                        break;
 
-                case DR.RIGHT:
-                    {
-                        this.#snake.unshift({
-                            cell: cell !== this.gridCount - 1 ? cell + 1 : cell - this.gridCount + 1,
-                            row,
-                        });
-                    }
-                    break;
+                    case DR.RIGHT:
+                        {
+                            this.#snake.unshift({
+                                cell: cell !== this.gridCount - 1 ? cell + 1 : cell - this.gridCount + 1,
+                                row,
+                            });
+                        }
+                        break;
 
-                case DR.UP:
-                    {
-                        this.#snake.unshift({
-                            cell,
-                            row: row !== 0 ? row - 1 : row + this.gridCount - 1,
-                        });
-                    }
-                    break;
+                    case DR.UP:
+                        {
+                            this.#snake.unshift({
+                                cell,
+                                row: row !== 0 ? row - 1 : row + this.gridCount - 1,
+                            });
+                        }
+                        break;
 
-                case DR.DOWN:
-                    {
-                        this.#snake.unshift({
-                            cell,
-                            row: row !== this.gridCount - 1 ? row + 1 : row - this.gridCount + 1,
-                        });
-                    }
-                    break;
+                    case DR.DOWN:
+                        {
+                            this.#snake.unshift({
+                                cell,
+                                row: row !== this.gridCount - 1 ? row + 1 : row - this.gridCount + 1,
+                            });
+                        }
+                        break;
+                }
+            } else {
+                switch (this.direction) {
+                    case DR.LEFT:
+                        {
+                            this.#snake.unshift({
+                                cell: cell - 1 !== -1 ? cell - 1 : this.#end(),
+                                row,
+                            });
+                        }
+                        break;
+
+                    case DR.RIGHT:
+                        {
+                            this.#snake.unshift({
+                                cell: cell + 1 < this.gridCount ? cell + 1 : this.#end(),
+                                row,
+                            });
+                        }
+                        break;
+
+                    case DR.UP:
+                        {
+                            this.#snake.unshift({
+                                cell,
+                                row: row - 1 !== -1 ? row - 1 : this.#end(),
+                            });
+                        }
+                        break;
+
+                    case DR.DOWN:
+                        {
+                            this.#snake.unshift({
+                                cell,
+                                row: row + 1 < this.gridCount ? row + 1 : this.#end(),
+                            });
+                        }
+                        break;
+                }
             }
 
             this.#clear();
@@ -121,16 +169,6 @@ class Snake extends Grid {
             }
         }
     }
-
-    // #noWallMode() {
-    //     const { cell, row } = this.#snake[0];
-
-    //     if (this.#mode === 'wall') {
-    //         if (cell === -1 || cell > this.gridCount || row === -1 || row > this.gridCount) {
-    //             this.#end();
-    //         }
-    //     }
-    // }
 
     #generateFood() {
         do {
