@@ -1,11 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-new */
-/* eslint-disable no-lone-blocks */
-/* eslint-disable default-case */
-/* eslint-disable import/extensions */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable no-plusplus */
 import Grid from './grid.js';
 import { DIRECTIONS as DR } from './helpers.js';
 
@@ -15,6 +7,8 @@ class Snake extends Grid {
     static snakeHeadCssClass = 'snake-head';
     static snakeBodyCssClass = 'snake-body';
     static gridContainerCssSelector = '#snake-container';
+    static modeSelector = '#staked-mode';
+    static speedSelector = '#stacked-state';
 
     #snake = [];
     #process = null;
@@ -50,6 +44,9 @@ class Snake extends Grid {
     }
 
     #start() {
+        this.#controls.speed.setAttribute('disabled', 'disabled');
+        this.#controls.mode.setAttribute('disabled', 'disabled');
+
         this.#snake = this.#buildSnake(Math.floor(this.gridCount / 2), Math.floor(this.gridCount / 2));
 
         this.#generateFood();
@@ -125,6 +122,16 @@ class Snake extends Grid {
         }
     }
 
+    // #noWallMode() {
+    //     const { cell, row } = this.#snake[0];
+
+    //     if (this.#mode === 'wall') {
+    //         if (cell === -1 || cell > this.gridCount || row === -1 || row > this.gridCount) {
+    //             this.#end();
+    //         }
+    //     }
+    // }
+
     #generateFood() {
         do {
             this.#food = {
@@ -168,7 +175,6 @@ class Snake extends Grid {
             }).length - 1;
 
         if (snakeBiteItself >= 1) {
-            this.#messageContainer.innerHTML = `Game Over!  Your result: ${this.#score}`;
             this.#end();
         }
     }
@@ -199,6 +205,9 @@ class Snake extends Grid {
         this.direction = DR.LEFT;
         this.#scoreContainer.lastChild.innerHTML = '0';
 
+        this.#controls.speed.removeAttribute('disabled');
+        this.#controls.mode.removeAttribute('disabled');
+
         this.#startBtn.style.display = 'block';
         this.#endBtn.style.display = 'none';
 
@@ -214,6 +223,7 @@ class Snake extends Grid {
 
     #end() {
         clearInterval(this.#process);
+        this.#messageContainer.innerHTML = `Game Over!  Your result: ${this.#score}`;
         this.#resetData();
         this.#clear();
     }
