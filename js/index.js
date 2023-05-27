@@ -78,8 +78,9 @@ class Snake extends Grid {
                     if (cell) {
                         newCell = cell - 1;
                     } else {
-                        newCell = isNoWallMode ? this.gridCount - 1 : 0;
+                        newCell = isNoWallMode ? this.gridCount - 1 : this.#end();
                     }
+
                     this.#snake.unshift({ cell: newCell, row });
 
                     break;
@@ -91,7 +92,7 @@ class Snake extends Grid {
                     if (cell !== this.gridCount - 1) {
                         newCell = cell + 1;
                     } else {
-                        newCell = isNoWallMode ? 0 : false;
+                        newCell = isNoWallMode ? 0 : this.#end();
                     }
 
                     this.#snake.unshift({ cell: newCell, row });
@@ -105,7 +106,7 @@ class Snake extends Grid {
                     if (row) {
                         newRow = row - 1;
                     } else {
-                        newRow = isNoWallMode ? this.gridCount - 1 : 0;
+                        newRow = isNoWallMode ? this.gridCount - 1 : this.#end();
                     }
 
                     this.#snake.unshift({ cell, row: newRow });
@@ -119,7 +120,7 @@ class Snake extends Grid {
                     if (row !== this.gridCount - 1) {
                         newRow = row + 1;
                     } else {
-                        newRow = isNoWallMode ? 0 : 0;
+                        newRow = isNoWallMode ? 0 : this.#end();
                     }
 
                     this.#snake.unshift({ cell, row: newRow });
@@ -134,8 +135,6 @@ class Snake extends Grid {
 
             this.#clear();
             this.#update();
-
-            return false;
         }, this.#speed);
     }
 
