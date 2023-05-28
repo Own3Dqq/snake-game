@@ -1,7 +1,7 @@
 import { Manipulator } from './helpers.js';
 
-export default class extends Manipulator{
-    constructor({boxSize, gridCount, gridContainerSelector, gridCellCssClass}) {
+export default class extends Manipulator {
+    constructor({ boxSize, gridCount, gridContainerSelector, gridCellCssClass }) {
         super();
 
         this.boxSize = boxSize;
@@ -9,21 +9,19 @@ export default class extends Manipulator{
         this.gridContainer = this.find(gridContainerSelector);
         this.gridCellCssClass = gridCellCssClass;
 
-
         this.#build();
     }
 
-
     #build() {
-        this.gridContainer.style.width = this.gridContainer.style.height = (this.boxSize * this.gridCount) + 'px';
+        this.gridContainer.style.width = this.gridContainer.style.height = this.boxSize * this.gridCount + 'px';
 
         for (let index = 0; index < this.gridCount; index++) {
-           this.gridContainer.append(this.#createRow(index));
+            this.gridContainer.append(this.#createRow(index));
         }
     }
 
     #createRow(row) {
-        let fragment = new DocumentFragment();
+        const fragment = new DocumentFragment();
         for (let index = 0; index < this.gridCount; index++) {
             fragment.append(this.#createCell(row, index));
         }
